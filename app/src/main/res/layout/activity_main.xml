@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/szary"
+    tools:ignore="HardcodedText"
+    tools:context=".MainActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/okienko"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:lines="2"
+            android:maxLines="2"
+            android:textColor="@color/bialy"
+            android:textAlignment="textEnd"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/wynik"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/wynik"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/bialy"
+            android:textAlignment="textEnd"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        style="@style/rzadprzycisk">
+
+        <Button
+            style="@style/operatorprzycisk"
+            android:onClick="zmienZnak"
+            android:text="+/-"/>
+        <Button
+            android:id="@+id/button_pi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="π" />
+        <Button
+            style="@style/operatorprzycisk"
+            android:textColor="@color/niebieski"
+            android:onClick="usundozeraction"
+            android:text="C"/>
+        <Button
+            style="@style/operatorprzycisk"
+            android:textColor="@color/niebieski"
+            android:onClick="backSpaceaction"
+            android:text="⌫"/>
+        <Button
+            style="@style/operatorprzycisk"
+            android:text="+"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/rzadprzycisk">
+
+        <Button
+            style="@style/operatorprzycisk"
+            android:text="f1"/>
+        <Button
+            style="@style/numerprzycisk"
+            android:text="1"/>
+        <Button
+            style="@style/numerprzycisk"
+            android:text="2"/>
+        <Button
+            style="@style/numerprzycisk"
+            android:text="3"/>
+        <Button
+            style="@style/operatorprzycisk"
+            android:text="-"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/rzadprzycisk">
+
+        <Button
+            style="@style/operatorprzycisk"
+            android:text="f2"/>
+        <Button
+            style="@style/numerprzycisk"
+            android:text="4"/>
+        <Button
+            style="@style/numerprzycisk"
+            android:text="5"/>
+        <Button
+            style="@style/numerprzycisk"
+            android:text="6"/>
+        <Button
+            style="@style/operatorprzycisk"
+            android:text="*"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/rzadprzycisk">
+
+        <Button
+            style="@style/operatorprzycisk"
+            android:text="mod"/>
+        <Button
+            style="@style/numerprzycisk"
+            android:text="7"/>
+        <Button
+            style="@style/numerprzycisk"
+            android:text="8"/>
+        <Button
+            style="@style/numerprzycisk"
+            android:text="9"/>
+        <Button
+            style="@style/operatorprzycisk"
+            android:text=":"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/rzadprzycisk">
+
+        <Button
+            style="@style/operatorprzycisk"
+            android:onClick="pierwiastekaction"
+            android:text="√"/>
+        <Button
+            style="@style/operatorprzycisk"
+            android:onClick="procentaction"
+            android:text="%"/>
+        <Button
+            style="@style/numerprzycisk"
+            android:text="0"/>
+        <Button
+            style="@style/operatorprzycisk"
+            android:text="."/>
+        <Button
+            style="@style/operatorprzycisk"
+            android:background="@color/jasnoniebieski"
+            android:onClick="rownasieaction"
+            android:textColor="@color/niebieski"
+            android:text="="/>
+
+    </LinearLayout>
+
+</LinearLayout>

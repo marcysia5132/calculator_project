@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="rzadprzycisk">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="numerprzycisk">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="background">@null</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/jasnoniebieski</item>
+        <item name="android:onClick">numeraction</item>
+    </style>
+
+    <style name="operatorprzycisk">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="background">@null</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/mietowy</item>
+        <item name="android:onClick">operatoraction</item>
+
+    </style>
+
+</resources>

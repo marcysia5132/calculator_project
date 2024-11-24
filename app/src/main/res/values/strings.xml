@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Kalkulator_Wegiel</string>
+    <string name="pi_value">%.15f</string>
+    <string name="wynik_format">%.15f</string>
+</resources>
