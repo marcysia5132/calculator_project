@@ -51,8 +51,11 @@
 
         <Button
             style="@style/operatorprzycisk"
-            android:onClick="zmienZnak"
-            android:text="+/-"/>
+            android:text="OFF"
+            android:background="@color/mietowy"
+            android:textColor="@color/bialy"
+            android:onClick="wylaczaction"/>
+
         <Button
             android:id="@+id/button_pi"
             android:layout_width="wrap_content"
@@ -79,7 +82,8 @@
 
         <Button
             style="@style/operatorprzycisk"
-            android:text="f1"/>
+            android:onClick="zmienZnak"
+            android:text="+/-"/>
         <Button
             style="@style/numerprzycisk"
             android:text="1"/>
@@ -100,7 +104,8 @@
 
         <Button
             style="@style/operatorprzycisk"
-            android:text="f2"/>
+            android:text="CAT"
+            android:onClick="catalanNumber"/>
         <Button
             style="@style/numerprzycisk"
             android:text="4"/>

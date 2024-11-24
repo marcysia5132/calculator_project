@@ -70,22 +70,20 @@ class MainActivity : AppCompatActivity() {
 
     fun operatoraction(view: View) {
         if (view is Button) {
-            if (view.text == "mod") {
-                okienko.append("%") // Zamieniamy "mod" na "%"
-            } else {
-                okienko.append(view.text)
+            val operatorText = if (view.text == "mod") "%" else view.text.toString() // Zamieniamy "mod" na "%"
 
-                if (isResultDisplayed) {
-                    okienko.text = wynik.text
-                    isResultDisplayed = false
-                }
-                if (canAddOperation) {
-                    okienko.append(view.text)
-                    canAddOperation = false
-                }
+            if (isResultDisplayed) {
+                okienko.text = wynik.text
+                isResultDisplayed = false
+            }
+
+            if (canAddOperation) {
+                okienko.append(operatorText) // Dodajemy przetworzony tekst operatora
+                canAddOperation = false
             }
         }
     }
+
 
     fun usundozeraction(view: View) {
         DOTFLAG = 0
@@ -112,7 +110,7 @@ class MainActivity : AppCompatActivity() {
             isResultDisplayed = true
         } catch (e: Exception) {
             wynik.text = "Błąd"
-            println("wystąpił błąd: ".format(e))
+            //println("wystąpił błąd: ".format(e))
             isResultDisplayed = true
         }
     }
@@ -144,49 +142,51 @@ class MainActivity : AppCompatActivity() {
 
     private fun PomnozPodziel(zalLista: MutableList<Any>): MutableList<Any> {
         var lista = zalLista
-        while (lista.contains('*') || lista.contains(':')) {
+        while (lista.contains('*') || lista.contains(':') || lista.contains('%')) { // Dodaj obsługę `%`
             lista = obliczPomnozPodziel(lista)
         }
         return lista
     }
 
+
     private fun obliczPomnozPodziel(zalLista: MutableList<Any>): MutableList<Any> {
         val nowaLista = mutableListOf<Any>()
-        var restartIndex = zalLista.size
+        var i = 0
 
-        for (i in zalLista.indices) {
-            if (zalLista[i] is Char && i != zalLista.lastIndex && i < restartIndex) {
+        while (i < zalLista.size) {
+            if (zalLista[i] is Char && i > 0 && i < zalLista.lastIndex) {
                 val operator = zalLista[i] as Char
                 val poprzcyfra = zalLista[i - 1] as Double
                 val nastcyfra = zalLista[i + 1] as Double
+
                 when (operator) {
                     '*' -> {
+                        nowaLista.removeLast()
                         nowaLista.add(poprzcyfra * nastcyfra)
-                        restartIndex = i + 1
+                        i++ // Pomijamy następną liczbę
                     }
-
                     ':' -> {
                         if (nastcyfra == 0.0) throw ArithmeticException("BŁĄD: dzielenie przez 0")
+                        nowaLista.removeLast()
                         nowaLista.add(poprzcyfra / nastcyfra)
-                        restartIndex = i + 1
+                        i++
                     }
-
                     '%' -> {
-                        nowaLista.add(poprzcyfra % nastcyfra)
-                        restartIndex = i + 1
+                        nowaLista.removeLast()
+                        nowaLista.add(poprzcyfra % nastcyfra) // Oblicz resztę z dzielenia
+                        i++
                     }
-
-                    else -> {
-                        nowaLista.add(poprzcyfra)
-                        nowaLista.add(operator)
-                    }
+                    else -> nowaLista.add(operator)
                 }
-            }
-            if (i > restartIndex)
+            } else {
                 nowaLista.add(zalLista[i])
+            }
+            i++
         }
+
         return nowaLista
     }
+
 
     //tworzy liste wpisanych znaków
     private fun cyfraoperator(): MutableList<Any> {
@@ -202,21 +202,20 @@ class MainActivity : AppCompatActivity() {
                     aktualnacyfra += character
                 }
                 character == '.' -> {
-                    if (!aktualnacyfra.contains('.')) { // Dodaj kropkę, jeśli nie występuje
+                    if (!aktualnacyfra.contains('.')) {
                         aktualnacyfra += character
                     }
                 }
-                character == '-' && (i == 0 || okienko.text[i - 1] in listOf('+', '-', '*', ':', '(')) -> {
+                character == '-' && (i == 0 || okienko.text[i - 1] in listOf('+', '-', '*', ':', '%')) -> {
                     isNegative = true
                 }
-                character == '%' -> {
-                    // Rozpoznaj "mod" jako operator
+                character in listOf('+', '-', '*', ':', '%') -> { // Uwzględnij `%`
                     if (aktualnacyfra.isNotEmpty()) {
                         lista.add(if (isNegative) -aktualnacyfra.toDouble() else aktualnacyfra.toDouble())
                         aktualnacyfra = ""
                         isNegative = false
                     }
-                    lista.add('%') // Dodaj operator "mod"
+                    lista.add(character) // Dodaj operator
                 }
                 else -> {
                     if (aktualnacyfra.isNotEmpty()) {
@@ -224,7 +223,6 @@ class MainActivity : AppCompatActivity() {
                         aktualnacyfra = ""
                         isNegative = false
                     }
-                    lista.add(character)
                 }
             }
         }
@@ -235,6 +233,7 @@ class MainActivity : AppCompatActivity() {
 
         return lista
     }
+
 
 
     private fun formatujWynik(wynik: Double): String {
@@ -300,5 +299,45 @@ class MainActivity : AppCompatActivity() {
             wynik.text = "Błąd"
             isResultDisplayed = true
         }
+    }
+    fun catalanNumber(view: View) {
+        try {
+            val currentText = okienko.text.toString()
+
+            if (currentText.isNotEmpty()) {
+                val number = currentText.toDouble()
+
+                if (number >= 0) {
+                    val result = funkcjaCatalana(number) // dodac implementacje funkcji Catalana
+                    wynik.text = formatujWynik(result)
+                    isResultDisplayed = true
+                    DOTFLAG = if (result % 1 == 0.0) 0 else 1 // Ustaw flagę kropki w zależności od wyniku
+                } else {
+                    wynik.text = "Błąd: liczba ujemna"
+                    isResultDisplayed = true
+                }
+            }
+        } catch (e: Exception) {
+            okienko.text = "Błąd"
+            isResultDisplayed = true
+        }
+    }
+
+    fun funkcjaCatalana(n: Double): Double {
+        if (n < 0) throw IllegalArgumentException("n musi być większe lub równe 0")
+        return silnia(2 * n) / (silnia(n + 1) * silnia(n))
+    }
+
+    // Funkcja pomocnicza do obliczania Catalana
+    fun silnia(num: Double): Double {
+        var result = 1.0
+        for (i in 1..num.toInt()) {
+            result *= i
+        }
+        return result
+    }
+
+    fun wylaczaction(view: View) {
+        finish()
     }
 }
