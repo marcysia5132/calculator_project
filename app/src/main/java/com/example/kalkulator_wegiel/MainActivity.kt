@@ -237,9 +237,11 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun formatujWynik(wynik: Double): String {
-        val bigDecimalWynik = BigDecimal(wynik).setScale(15, RoundingMode.HALF_UP)
+        // Zaokrąglamy wynik do 3 miejsc po przecinku
+        val bigDecimalWynik = BigDecimal(wynik).setScale(3, RoundingMode.HALF_UP)
+
         return if (bigDecimalWynik.stripTrailingZeros().scale() <= 0) {
-            bigDecimalWynik.toBigInteger().toString()
+            bigDecimalWynik.toBigInteger().toString() // Usuwamy ".0" dla liczb całkowitych
         } else {
             bigDecimalWynik.stripTrailingZeros().toPlainString()
         }
